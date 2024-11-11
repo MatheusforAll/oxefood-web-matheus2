@@ -1,8 +1,13 @@
+<<<<<<< HEAD
 import React, { useState } from "react";
+=======
+import React from "react";
+>>>>>>> 7b90d63681221338bc48c87a66fc2f2f3a162648
 import InputMask from 'react-input-mask';
 import { Button, Container, Divider, Form, Icon, Select } from 'semantic-ui-react';
 
 export default function FormEntregador() {
+<<<<<<< HEAD
 
     const [nome, setNome] = useState();
     const [cpf, setCpf] = useState();
@@ -23,6 +28,8 @@ export default function FormEntregador() {
 
  
 
+=======
+>>>>>>> 7b90d63681221338bc48c87a66fc2f2f3a162648
     return (
         <div>
             <div style={{ marginTop: '3%' }}>
