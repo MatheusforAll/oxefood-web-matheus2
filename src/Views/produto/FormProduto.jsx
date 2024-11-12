@@ -6,6 +6,33 @@ import { Button, Container, Divider, Form, Icon, TextArea } from 'semantic-ui-re
 export default function FormProduto () {
 
     const [titulo, setTitulo] = useState();
+    const [códigodoproduto, setCódigodoproduto] = useState();
+    const [descricao, setDescricao] = useState();
+    const [valorunitario, setValorUnitario] = useState();
+    const [tempoEntregaMinimo, setTempoEntregaMinimo] = useState();
+    const [tempoEntregaMaximo, setTempoEntregaMaximo] = useState();
+
+    function salvar() {
+
+		let produtoRequest = {
+            titulo: titulo,
+            códigodoproduto: códigodoproduto,
+            descricao: descricao,
+            valorunitario: valorunitario,
+		    tempoEntregaMinimo: tempoEntregaMinimo,
+            tempoEntregaMaximo:tempoEntregaMaximo
+		}
+	
+		axios.post("http://localhost:8080/api/produto", produtoRequest)
+		.then((response) => {
+		     console.log('Produto cadastrado com sucesso.')
+		})
+		.catch((error) => {
+		     console.log('Erro ao incluir o um produto.')
+		})
+	}
+
+    
    
 
 
@@ -24,6 +51,9 @@ export default function FormProduto () {
                                     label='Titulo'
                                     placeholder='Informe o título do produto'
                                     maxLength="100"
+                                    value={titulo}
+			                        onChange={e => setTitulo(e.target.value)}
+
                                 />
 
                                 <Form.Input
@@ -32,6 +62,8 @@ export default function FormProduto () {
                                     label='Código do produto'
                                     placeholder='Informe o código do produto'
                                     maxLength="100"
+                                    value={códigodoproduto}
+			                        onChange={e => setCódigodoproduto(e.target.value)}
                                 />
                             </Form.Group>
                             
@@ -39,7 +71,9 @@ export default function FormProduto () {
                             <Form.Group widths='equal'>
 
                                 <Form.Input
-                                    label='Titulo'
+                                    label='Descricão'
+                                    value={descricao}
+			                        onChange={e => setDescricao(e.target.value)}
                                 >
                                     <TextArea placeholder='Informe a descrição do produto' />
                                 </Form.Input>
@@ -52,18 +86,24 @@ export default function FormProduto () {
                                     fluid
                                     label='Valor Unitário'
                                     width={5}
+                                    value={valorunitario}
+			                        onChange={e => setValorUnitario(e.target.value)}
                                 /> 
                                 <Form.Input
                                     fluid
                                     label='Tempo de Entrega Mínimo em Minutos'
                                     placeholder='30'
                                     width={6}
+                                    value={tempoEntregaMinimo}
+			                        onChange={e => setTempoEntregaMinimo(e.target.value)}
                                 /> 
                                 <Form.Input
                                     fluid
                                     label='Tempo de Entrega Máximo em Minutos'
                                     placeholder='40'
                                     width={6}
+                                    value={tempoEntregaMaximo}
+			                        onChange={e => setTempoEntregaMaximo(e.target.value)}
                                 />
                             </Form.Group>
 
@@ -89,6 +129,8 @@ export default function FormProduto () {
                                 labelPosition='left'
                                 color='blue'
                                 floated='right'
+                                onClick={() => salvar()}
+
                             >
                                 <Icon name='save' />
                                 Salvar

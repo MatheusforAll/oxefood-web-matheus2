@@ -5,6 +5,7 @@ import './App.css';
 //import FormCliente from './Views/cliente/FormCliente';
 //import FormProduto from './Views/produto/FormProduto';
 import FormEntregador from './Views/entregador/FormEntregador';
+import FormProduto from './Views/produto/FormProduto';
 
 
 function App() {
@@ -12,7 +13,7 @@ function App() {
 
     <div className="App">
 
-<FormEntregador />
+<FormProduto/>
 
 <div style={{marginTop: '6%'}}>
         <Segment vertical color='grey' size='tiny' textAlign='center'>
