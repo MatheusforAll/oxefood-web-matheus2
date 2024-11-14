@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import MenuSistema from '../../MenuSistema';
 import { Button, Container, Divider, Form, Icon, TextArea } from 'semantic-ui-react';
 
 
@@ -38,6 +39,9 @@ export default function FormProduto () {
 
     return (
         <div>
+            
+            <MenuSistema tela={'Produto'} />
+
             <div style={{marginTop: '3%'}}>
                 <Container textAlign='justified' >
                     <h2> <span style={{color: 'darkgray'}}> Produto &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro </h2>

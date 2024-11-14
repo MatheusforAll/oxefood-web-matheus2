@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import InputMask from 'react-input-mask';
+import MenuSistema from '../../MenuSistema';
 import { Button, Container, Divider, Form, Icon, Select } from 'semantic-ui-react';
 
 export default function FormEntregador() {
@@ -61,6 +62,8 @@ export default function FormEntregador() {
 
     return (
         <div>
+              <MenuSistema tela={'entregador'} />
+
             <div style={{ marginTop: '3%' }}>
                 <Container textAlign='justified' >
                     <Divider />

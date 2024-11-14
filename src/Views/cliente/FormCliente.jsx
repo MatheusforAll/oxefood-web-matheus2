@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import InputMask from 'react-input-mask';
 import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
+import MenuSistema from '../../MenuSistema';
 export default function FormCliente () {
 
    const [nome, setNome] = useState();
@@ -32,6 +33,8 @@ export default function FormCliente () {
 
     return (
         <div>
+              <MenuSistema tela={'cliente'} />
+
             <div style={{marginTop: '3%'}}>
                 <Container textAlign='justified' >
                     <h2> <span style={{color: 'darkgray'}}> Cliente &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro </h2>
