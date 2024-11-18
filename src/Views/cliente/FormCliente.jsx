@@ -1,136 +1,108 @@
-import axios from "axios";
-import React, { useState } from "react";
-import InputMask from 'react-input-mask';
-import { Button, Container, Divider, Form, Icon } from 'semantic-ui-react';
+import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Button, Container, Divider, Icon, Table } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
-export default function FormCliente () {
 
-   const [nome, setNome] = useState();
-   const [cpf, setCpf] = useState();
-   const [dataNascimento, setDataNascimento] = useState();
-   const [foneCelular, setFoneCelular] = useState();
-   const [foneFixo, setFoneFixo] = useState();
+export default function ListCliente () {
 
-   
-   function salvar() {
+   const [lista, setLista] = useState([]);
 
-    let clienteRequest = {
-         nome: nome,
-         cpf: cpf,
-         dataNascimento: dataNascimento,
-         foneCelular: foneCelular,
-         foneFixo: foneFixo
+   useEffect(() => {
+       carregarLista();
+   }, [])
+
+   function carregarLista() {
+
+       axios.get("http://localhost:8080/api/cliente")
+       .then((response) => {
+           setLista(response.data)
+       })
+   }
+   function formatarData(dataParam) {
+
+    if (dataParam === null || dataParam === '' || dataParam === undefined) {
+        return ''
     }
 
-    axios.post("http://localhost:8080/api/cliente", clienteRequest)
-    .then((response) => {
-         console.log('Cliente cadastrado com sucesso.')
-    })
-    .catch((error) => {
-         console.log('Erro ao incluir o um cliente.')
-    })
+    let arrayData = dataParam.split('-');
+    return arrayData[2] + '/' + arrayData[1] + '/' + arrayData[0];
 }
 
-    return (
-        <div>
-              <MenuSistema tela={'cliente'} />
+return(
+    <div>
+        <MenuSistema tela={'cliente'} />
+        <div style={{marginTop: '3%'}}>
 
-            <div style={{marginTop: '3%'}}>
-                <Container textAlign='justified' >
-                    <h2> <span style={{color: 'darkgray'}}> Cliente &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro </h2>
-                    <Divider />
-                    <div style={{marginTop: '4%'}}>
-                        <Form>
-                            <Form.Group widths='equal'>
-                                <Form.Input
-                                    required
-                                    fluid
-                                    label='Nome'
-                                    maxLength="100"
-                                    value={nome}
-			                        onChange={e => setNome(e.target.value)}
+            <Container textAlign='justified' >
 
-                                />
-                                <Form.Input
-                                    required
-                                    fluid
-                                    label='CPF'>
-                                    <InputMask
-                                        required
-                                        mask="999.999.999-99"
-                                        value={cpf}
-				                        onChange={e => setCpf(e.target.value)}
-                                    /> 
-                                </Form.Input>
-                            </Form.Group>
-                            
-                            <Form.Group>
-                                <Form.Input
-                                    fluid
-                                    label='Fone Celular'
-                                    width={6}>
-                                    <InputMask 
-                                        mask="(99) 9999.9999"
-                                        value={foneCelular}
-                                        onChange={e => setFoneCelular(e.target.value)}
-                                    /> 
-                                </Form.Input>
-                                <Form.Input
-                                    fluid
-                                    label='Fone Fixo'
-                                    width={6}>
-                                    <InputMask 
-                                        mask="(99) 9999.9999"
-                                        value={foneFixo}
-                                        onChange={e => setFoneFixo(e.target.value)}/> 
-                                </Form.Input>
-                                <Form.Input
-                                    fluid
-                                    label='Data Nascimento'
-                                    width={6}
-                                >
-                                    <InputMask 
-                                        mask="99/99/9999" 
-                                        maskChar={null}
-                                        placeholder="Ex: 20/03/1985"
-                                        value={dataNascimento}
-                                       onChange={e => setDataNascimento(e.target.value)}
-                                    /> 
-                                </Form.Input>
-                            </Form.Group>
-                        
-                        </Form>
-                        
-                        <div style={{marginTop: '4%'}}>
-                            <Button
-                                type="button"
-                                inverted
-                                circular
-                                icon
-                                labelPosition='left'
-                                color='orange'
-                            >
-                                <Icon name='reply' />
-                                Voltar
-                            </Button>
-                                
-                            <Button
-                                inverted
-                                circular
-                                icon
-                                labelPosition='left'
-                                color='blue'
-                                floated='right'
-                                onClick={() => salvar()}
-                            >
-                                <Icon name='save' />
-                                Salvar
-                            </Button>
-                        </div>
-                    </div>
-                    
-                </Container>
-            </div>
-        </div>
-    );
+                <h2> Cliente </h2>
+                <Divider />
+
+                <div style={{marginTop: '4%'}}>
+                    <Button
+                        label='Novo'
+                        circular
+                        color='orange'
+                        icon='clipboard outline'
+                        floated='right'
+                        as={Link}
+                        to='/form-cliente'
+                    />
+   <br/><br/><br/>
+                  
+                  <Table color='orange' sortable celled>
+
+                      <Table.Header>
+                          <Table.Row>
+                              <Table.HeaderCell>Nome</Table.HeaderCell>
+                              <Table.HeaderCell>CPF</Table.HeaderCell>
+                              <Table.HeaderCell>Data de Nascimento</Table.HeaderCell>
+                              <Table.HeaderCell>Fone Celular</Table.HeaderCell>
+                              <Table.HeaderCell>Fone Fixo</Table.HeaderCell>
+                              <Table.HeaderCell textAlign='center'>Ações</Table.HeaderCell>
+                          </Table.Row>
+                      </Table.Header>
+                 
+                      <Table.Body>
+
+                          { lista.map(cliente => (
+
+                              <Table.Row key={cliente.id}>
+                                  <Table.Cell>{cliente.nome}</Table.Cell>
+                                  <Table.Cell>{cliente.cpf}</Table.Cell>
+                                  <Table.Cell>{formatarData(cliente.dataNascimento)}</Table.Cell>
+                                  <Table.Cell>{cliente.foneCelular}</Table.Cell>
+                                  <Table.Cell>{cliente.foneFixo}</Table.Cell>
+                                  <Table.Cell textAlign='center'>
+
+                                      <Button
+                                          inverted
+                                          circular
+                                          color='green'
+                                          title='Clique aqui para editar os dados deste cliente'
+                                          icon>
+                                               <Icon name='edit' />
+                                      </Button> &nbsp;
+                                      <Button
+                                               inverted
+                                               circular
+                                               color='red'
+                                               title='Clique aqui para remover este cliente'
+                                               icon>
+                                                   <Icon name='trash' />
+                                           </Button>
+
+                                       </Table.Cell>
+                                   </Table.Row>
+                               ))}
+
+                           </Table.Body>
+                       </Table>
+                   </div>
+               </Container>
+           </div>
+
+       </div>
+   )
 }
