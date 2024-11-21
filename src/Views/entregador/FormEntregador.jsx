@@ -13,7 +13,6 @@ export default function FormEntregador() {
     const [dataNascimento, setDataNascimento] = useState();
     const [foneCelular, setFoneCelular] = useState();
     const [foneFixo, setFoneFixo] = useState();
-
     const [qtdentregasrealizadas, setQTDEntregasRealizadas] = useState();
     const [valorporfrete, setValorPorFrete] = useState();
     const [rua, setRua] = useState();
@@ -21,9 +20,7 @@ export default function FormEntregador() {
     const [bairro, setBairro] = useState();
     const [cidade, setCidade] = useState();
     const [cep, setCEP] = useState();
-
     const [enderecoUf, setEnderecoUf] = useState();
-
     const [complemento, setComplemento] = useState();
     const [ativo, setAtivo] = useState(true);
   
@@ -236,7 +233,6 @@ export default function FormEntregador() {
                                 <Icon name='reply' />
                                 <Link to={'/list-entregador'}>Voltar</Link>
 
-                                Voltar
                             </Button>
                             <Button
                                 inverted
