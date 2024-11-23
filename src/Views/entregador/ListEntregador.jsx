@@ -96,8 +96,8 @@ export default function ListEntregador() {
                                                 color='green'
                                                 title='Clique aqui para editar os dados deste entregador'
                                                 icon>
-                                                       <Link to="/form-cliente" state={{id: entregador.id}} style={{color: 'green'}}> <Icon name='edit' /> </Link>
-                                                <Icon name='edit' />
+                                                       <Link to="/form-entregador" state={{id: entregador.id}} style={{color: 'green'}}> <Icon name='edit' /> </Link>
+                                              
                                             </Button> &nbsp;
                                             <Button
                                                 inverted

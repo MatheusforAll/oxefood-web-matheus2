@@ -85,9 +85,8 @@ return(
                                           color='green'
                                           title='Clique aqui para editar os dados deste produto'
                                           icon>
-                                             <Link to="/form-cliente" state={{id: produto.id}} style={{color: 'green'}}> <Icon name='edit' /> </Link>
+                                             <Link to="/form-produto" state={{id: produto.id}} style={{color: 'green'}}> <Icon name='edit' /> </Link>
 
-                                               <Icon name='edit' />
                                       </Button> &nbsp;
                                       <Button
                                                inverted
