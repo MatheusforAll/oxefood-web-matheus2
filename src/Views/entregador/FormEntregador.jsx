@@ -1,12 +1,14 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputMask from 'react-input-mask';
-import { Link } from "react-router-dom";
+import { Link,  useLocation  } from "react-router-dom";
 import { Button, Container, Divider, Form, Icon, Select } from 'semantic-ui-react';
 import MenuSistema from '../../MenuSistema';
 
 export default function FormEntregador() {
 
+    const { state } = useLocation();
+    const [idEntregador, setIdEntregador] = useState();
     const [nome, setNome] = useState();
     const [cpf, setCpf] = useState();
     const [rg, setRG] = useState();
@@ -24,6 +26,12 @@ export default function FormEntregador() {
     const [complemento, setComplemento] = useState();
     const [ativo, setAtivo] = useState(true);
   
+
+    function formatarData(data) {
+        const dataObj = new Date(data);
+        return dataObj.toLocaleDateString('pt-BR');
+    }
+
     function salvar() {
 
 		let entregadorRequest = {
@@ -46,7 +54,14 @@ export default function FormEntregador() {
 
 
 		}
-	
+
+        if (idEntregador != null) { //Alteração:
+            axios.put("http://localhost:8080/api/entregador/" + idEntregador, entregadorRequest)
+            .then((response) => { console.log('Entregador alterado com sucesso.') })
+            .catch((error) => { console.log('Erro ao alter um entregador.') })
+        } else 
+ 
+
 		axios.post("http://localhost:8080/api/entregador", entregadorRequest)
 		.then((response) => {
 		     console.log('Entregador cadastrado com sucesso.')
@@ -56,6 +71,35 @@ export default function FormEntregador() {
 		})
 	}
 
+    useEffect(() => {
+        if (state != null && state.id != null) {
+            axios.get("http://localhost:8080/api/entregador/" + state.id)
+.then((response) => {
+                           setIdEntregador(response.data.id)
+                           setNome(response.data.nome)
+                           setCpf(response.data.cpf)
+                           setRG(response.data.rg)
+                           setDataNascimento(formatarData(response.data.dataNascimento))
+                           setFoneCelular(response.data.foneCelular)
+                           setFoneFixo(response.data.foneFixo)
+                           setQTDEntregasRealizadas(response.data.qtdentregasrealizadas)
+                           setValorPorFrete(response.data.valorporfrete)
+                           setRua(response.data.rua)
+                           setNúmero(response.data.número)
+                           setBairro(response.data.bairro)
+                           setCidade(response.data.cidade)
+                           setCEP(response.data.cep)
+                           setEnderecoUf(response.data.enderecoUf)
+                           setComplemento(response.data.complemento)
+                           setComplemento(response.data.complemento)
+                           
+                           
+
+            })
+        }
+}, [state])
+
+
  
 
     return (
@@ -64,6 +108,13 @@ export default function FormEntregador() {
 
             <div style={{ marginTop: '3%' }}>
                 <Container textAlign='justified' >
+                { idEntregador === undefined &&
+    <h2> <span style={{color: 'darkgray'}}> Entregador &nbsp;<Icon name='angle double right' size="small" /> </span> Cadastro</h2>
+}
+{ idEntregador != undefined &&
+    <h2> <span style={{color: 'darkgray'}}> Entregador &nbsp;<Icon name='angle double right' size="small" /> </span> Alteração</h2>
+}
+
                     <Divider />
                     <div style={{ marginTop: '4%' }}>
                         <Form>
