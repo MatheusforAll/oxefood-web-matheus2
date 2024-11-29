@@ -44,7 +44,7 @@ export default function FormProduto () {
 
     useEffect(() => {
        		if (state != null && state.id != null) {
-           		axios.get("http://localhost:8080/api/cliente/" + state.id)
+           		axios.get("http://localhost:8080/api/produto/" + state.id)
 .then((response) => {
                	    	       setIdProduto(response.data.id)
                	    	       setTitulo(response.data.titulo)
