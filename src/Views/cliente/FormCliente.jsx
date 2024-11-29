@@ -15,6 +15,7 @@ export default function FormCliente() {
    const [foneCelular, setFoneCelular] = useState('');
    const [foneFixo, setFoneFixo] = useState('');
 
+   
    function formatarData(data) {
     const dataObj = new Date(data);
     return dataObj.toLocaleDateString('pt-BR');
